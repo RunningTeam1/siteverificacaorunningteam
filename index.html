@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site de verificação</title>
-
-    <link rel="icon" type="image/icon" href="running_team_scs_avatar-02.ico">
-
+    <title>Site de Verificação</title>
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
     <style>
         body {
             text-align: center;
@@ -18,7 +18,34 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), white), 
+                        url('Foto de fundo site RT.jpg') no-repeat center center/cover;
+            transition: background 0.5s ease-in-out;
         }
+        
+        .hidden {
+            display: none;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .logo-container img {
+            width: 200px; 
+            filter: drop-shadow(2px 2px 5px black); /* Contorno preto */
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
         .title {
             font-size: 50px;
             color: green;
@@ -26,33 +53,92 @@
             align-items: center;
             justify-content: center;
         }
+
         .title img {
             width: 130px;
             height: 150px;
             margin-left: 10px;
         }
+
         .subtitle {
             font-size: 20px;
             color: black;
             margin-top: 20px;
         }
+
         .image-container {
             margin-top: 20px;
         }
+
         .image-container img {
             width: 250px;
+        }
+
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #error-message {
+            color: red;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="title">
-        Verificação concluída
-        <img src="Logo verificado sem fundo.png" alt="Verificado">
+
+    <!-- Logo acima do login -->
+    <div class="logo-container" id="logo">
+        <img src="Logo RT branco sem fundo 2.png" alt="Running Team Logo">
     </div>
-    <div class="subtitle">Running Team São Caetano do Sul</div>
-    <div class="image-container">
-        <img src="Logo RT branco sem fundo.png" alt="Running Team Logo">
+
+    <!-- Tela de Login -->
+    <div id="login-screen" class="login-box">
+        <h2>Digite seu código de verificação</h2>
+        <input type="text" id="verificationCode" placeholder="Código de acesso">
+        <button onclick="checkAccess()">Verificar</button>
+        <p id="error-message">Código incorreto. Tente novamente.</p>
     </div>
-</head>
+
+    <!-- Tela de Verificação Concluída (oculta inicialmente) -->
+    <div id="verification-screen" class="hidden">
+        <div class="title">
+            Verificação concluída
+            <img src="Logo verificado sem fundo.png" alt="Verificado">
+        </div>
+        <div class="subtitle">Running Team São Caetano do Sul</div>
+        <div class="image-container">
+            <img src="LOGO RT.png" alt="Running Team Logo">
+        </div>
+    </div>
+
+    <script>
+        function checkAccess() {
+            const allowedCodes = ["45307028806", "123456", "ALUNO2024"]; // Códigos permitidos
+            const userCode = document.getElementById("verificationCode").value;
+            const errorMessage = document.getElementById("error-message");
+            
+            if (allowedCodes.includes(userCode)) {
+                document.getElementById("login-screen").style.display = "none";
+                document.getElementById("verification-screen").classList.remove("hidden");
+                document.getElementById("logo").style.display = "none"; // Esconde a logo
+                
+                document.body.style.background = "white";
+            } else {
+                errorMessage.style.display = "block";
+            }
+        }
+    </script>
+
 </body>
 </html>
